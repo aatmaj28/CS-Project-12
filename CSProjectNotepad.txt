@@ -1,0 +1,2037 @@
+#include<fstream.h>
+#include<conio.h>
+#include<stdio.h>
+#include<process.h>
+#include<math.h>
+#include<string.h>
+#include<dos.h>
+class info {  public:
+	      char name[69], SO[69], gender[7];
+	      int age, HP, strength, charisma, agility, intellect, morality;
+	   };
+info hero;
+fstream fin,fout;
+void save()
+{
+ fout.open("GAMEDATA.dat",ios::out|ios::app|ios::binary);
+ fout.write((char*)&hero,sizeof(hero));
+ fout.close();
+}
+void display()
+{
+ fin.open("GAMEDATA.dat",ios::in|ios::binary);
+ fin.seekg(-1*sizeof(hero),ios::end);
+ fin.read((char*)&hero,sizeof(hero));
+ cout<<"\nName of character: ";
+ puts(hero.name);
+ cout<<"Gender: ";
+ puts(hero.gender);
+ cout<<"Name of S/O: ";
+ puts(hero.SO);
+ cout<<"Age: "<<hero.age;
+ cout<<"\nHP: "<<hero.HP;
+ cout<<"\nStrength: "<<hero.strength;
+ cout<<"\nCharisma: "<<hero.charisma;
+ cout<<"\nAgility: "<<hero.agility;
+ cout<<"\nIntellect: "<<hero.intellect;
+ cout<<"\nMorality: "<<hero.morality;
+ fin.close();
+}
+void displayall()
+{
+ int num=1;
+ fin.open("GAMEDATA.dat",ios::in);
+ fin.seekg(0);
+ clrscr();
+ cout<<"\n\nSTATS OF ALL PLAYERS\n";
+ while (fin.read((char*)&hero,sizeof(hero)))
+ {
+  cout<<"\n\nPLAYER "<<num<<" STATS\n";
+  cout<<"\nName of character: ";
+  puts(hero.name);
+  cout<<"Gender: ";
+  puts(hero.gender);
+  cout<<"Name of S/O: ";
+  puts(hero.SO);
+  cout<<"Age: "<<hero.age;
+  cout<<"\nHP: "<<hero.HP;
+  cout<<"\nStrength: "<<hero.strength;
+  cout<<"\nCharisma: "<<hero.charisma;
+  cout<<"\nAgility: "<<hero.agility;
+  cout<<"\nIntellect: "<<hero.intellect;
+  cout<<"\nMorality: "<<hero.morality;
+  getch();
+  num++;
+ }
+}
+void punch()
+{
+ sound(19);delay(50);nosound();
+}
+void whns()  //White noise
+{
+ sound(2000);delay(800);nosound();
+}
+void alarm()
+{
+ for (int i=1;i<=4;i++)
+ {
+  sound(50);delay(500);nosound();
+  sound(1);delay(500);nosound();
+ }
+ getch();
+}
+void crash()
+{
+ sound(24);delay(200);sound(22);delay(125);sound(20);delay(75);nosound();
+}
+void good()  //Stat increase
+{
+ sound(500);delay(100);sound(1500);delay(125);sound(3000);delay(300);nosound();
+}
+void bad()  //Stat decrease
+{
+ sound(100);delay(100);sound(50);delay(200);nosound();
+}
+void battle()  //Battle music
+{
+ for (int i=1;i<=4;i++)
+ {
+  sound(300);delay(150);sound(335);delay(150);sound(350);delay(150);
+  sound(300);delay(150);sound(395);delay(145);sound(356);delay(150);
+  sound(330);delay(150);sound(356);delay(113);sound(1);delay(50);
+ }
+ nosound();
+ getch();
+}
+void title()  //Title track
+{
+ sound(280);delay(200);sound(310);delay(200);sound(340);delay(1250);
+ sound(280);delay(700);sound(250);delay(700);sound(220);delay(1000);nosound();
+}
+void HP1(int x1)  //Increase or decrease in HP
+{
+ if (x1>0)
+ {
+  hero.HP+=x1;
+  good();
+  cout<<"Your HP increased by "<<x1<<"!"<<endl;
+  getch();
+ }
+ else
+ {
+  hero.HP-=fabs(x1);
+  bad();
+  cout<<"Your HP decreased by "<<fabs(x1)<<"."<<endl;
+  getch();
+ }
+}
+void str1(int x2)  //Increase or decrease in S
+{
+ if (x2>0)
+ {
+  hero.strength+=x2;
+  good();
+  cout<<"Your S increased by "<<x2<<"!"<<endl;
+  getch();
+ }
+ else
+ {
+  hero.strength-=fabs(x2);
+  bad();
+  cout<<"Your S decreased by "<<fabs(x2)<<"."<<endl;
+  getch();
+ }
+}
+void crs1(int x3)  //Increase or decrease in C
+{
+ if (x3>0)
+ {
+  hero.charisma+=x3;
+  good();
+  cout<<"Your C increased by "<<x3<<"!"<<endl;
+  getch();
+ }
+ else
+ {
+  hero.charisma-=fabs(x3);
+  bad();
+  cout<<"Your C decreased by "<<fabs(x3)<<"."<<endl;
+  getch();
+ }
+}
+void agl1(int x4)  //Increase or decrease in A
+{
+ if (x4>0)
+ {
+  hero.agility+=x4;
+  good();
+  cout<<"Your A increased by "<<x4<<"!"<<endl;
+  getch();
+ }
+ else
+ {
+  hero.agility-=fabs(x4);
+  bad();
+  cout<<"Your A decreased by "<<fabs(x4)<<"."<<endl;
+  getch();
+ }
+}
+void int1(int x5)  //Increase or decrease in I
+{
+ if (x5>0)
+ {
+  hero.intellect+=x5;
+  good();
+  cout<<"Your I increased by "<<x5<<"!"<<endl;
+  getch();
+ }
+ else
+ {
+  hero.intellect-=fabs(x5);
+  bad();
+  cout<<"Your I decreased by "<<fabs(x5)<<"."<<endl;
+  getch();
+ }
+}
+void HP2(int x6)  //Increase or decrease in health
+{
+ if (x6>0)
+ {
+  hero.HP+=x6;
+  good();
+  cout<<"Your health increased!"<<endl;
+  getch();
+ }
+ else
+ {
+  hero.HP-=fabs(x6);
+  bad();
+  cout<<"Your health decreased."<<endl;
+  getch();
+ }
+}
+void str2(int x7)  //Increase or decrease in strength
+{
+ if (x7>0)
+ {
+  hero.strength+=x7;
+  good();
+  cout<<"Your strength increased!"<<endl;
+  getch();
+ }
+ else
+ {
+  hero.strength-=fabs(x7);
+  bad();
+  cout<<"Your strength decreased."<<endl;
+  getch();
+ }
+}
+void crs2(int x8)  //Increase or decrease in charisma
+{
+ if (x8>0)
+ {
+  hero.charisma+=x8;
+  good();
+  cout<<"Your charisma increased!"<<endl;
+  getch();
+ }
+ else
+ {
+  hero.charisma-=fabs(x8);
+  bad();
+  cout<<"Your charisma decreased."<<endl;
+  getch();
+ }
+}
+void agl2(int x9)  //Increase or decrease in agility
+{
+ if (x9>0)
+ {
+  hero.agility+=x9;
+  good();
+  cout<<"Your agility increased!"<<endl;
+  getch();
+ }
+ else
+ {
+  hero.agility-=fabs(x9);
+  bad();
+  cout<<"Your agility decreased."<<endl;
+  getch();
+ }
+}
+void int2(int x10)  //Increase or decrease in intellect
+{
+ if (x10>0)
+ {
+  hero.intellect+=x10;
+  good();
+  cout<<"Your intellect increased!"<<endl;
+  getch();
+ }
+ else
+ {
+  hero.intellect-=fabs(x10);
+  bad();
+  cout<<"Your intellect decreased."<<endl;
+  getch();
+ }
+}
+void main()
+{
+ clrscr();
+ cout<<endl<<"WARNING"<<endl<<endl;
+ cout<<"This game requires you to pay attention to detail, explore everything";
+ cout<<", and use "<<endl<<"logic in order to get the best possible ending. It also deals";
+ cout<<" with mature topicsand dark themes. Player discretion is advised."<<endl;
+ cout<<endl<<"*PRESS ENTER TO CONTINUE*";
+ getch();
+ T:
+ int m,l,b,i,c1,g,p,c2,v=0,c3,j=0,comp=0,c41,c42,c43,c44,c45,c46;
+ int k=0,c51,c52,c53,c54,c55,c56,c57,c61,c62,c63,c64,c65,c66,c7;
+ char s1[8],s2[4],s3[4],s4[4],s5[8],s6[5],s7[6],r,ch;
+ clrscr();
+ cout<<endl;
+ cout<<"It's the year 2082. Civilization has advanced far more than we could";
+ cout<<" have ever "<<endl<<"imagined. Space is no longer a new frontier. Space travel";
+ cout<<" was invented 12 years ago, and perfected 5 years ago. Man has been ";
+ cout<<"able to come in contact with and "<<endl<<"befriend, aliens. We are now aboard";
+ cout<<" the Solaris, cruising towards Andromeda at acomfortable 0.4c m/s ";
+ cout<<"(that's 0.4 times the speed of light, for the uninitiated)."<<endl;
+ getch();
+ crash();
+ getch();
+ cout<<"Wait, what was that noise?";
+ getch();
+ cout<<" *ENGINE FAILURE! EVACUATE IMMEDIATELY!* ";
+ alarm();
+ cout<<"Looks like   the ship is about to crash! But there's only one escape ";
+ cout<<"pod left!"<<endl<<endl;
+ getch();
+ C1:
+ cout<<"What should I do?"<<endl;
+ cout<<"1. Save your S/O"<<endl;
+ cout<<"2. Save yourself"<<endl;
+ cin>>c1;
+ if (c1==1)
+ {
+  cout<<endl<<"I often used to ask myself, \"Am I ready to die for my true love?\"";
+  cout<<", but was neverreally able to answer that question satisfactorily. ";
+  cout<<"But now, as I see myself "<<endl<<"drifting closer to my imminent doom, I ";
+  cout<<"realize that the answer is yes.";
+  hero.morality=100;
+  getch();
+  cout<<endl<<endl<<endl<<"                                TRUE PACIFIST ENDING";
+  title();
+  getch();
+  goto R;
+ }
+ else if (c1==2)
+ {
+  cout<<endl<<"As I bid my final goodbye and enter the pod to eject myself into the";
+  cout<<" cosmos, I "<<endl<<"feel my hands tremble and a shiver goes down my spine. I ";
+  cout<<"just let my true love "<<endl<<"die! I am a monster, and I'm sure I'll have ";
+  cout<<"to pay for this."<<endl;
+  hero.morality=-5;
+  getch();
+ }
+ else
+ {
+  cout<<endl<<"This is not a time for jokes! I need to decide..."<<endl;
+  getch();
+  goto C1;
+ }
+ cout<<endl;
+ cout<<"The burning Solaris backlights my pod as I plummet towards Eureka. I";
+ cout<<" don't thinkthis pod was made to stick landings. I guess my life is";
+ cout<<" in the hands of the Godsnow."<<endl;
+ getch();
+ clrscr();
+ title();
+ M:
+ cout<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl;
+ cout<<"                               JOURNEY TO THE BEYOND";
+ getch();
+ clrscr();
+ cout<<endl;
+ cout<<"Blackness. Complete blackness. Then as my vision restores, the ";
+ cout<<"surroundings go "<<endl<<"from red to yellow to their natural hues. For a";
+ cout<<" person who just went through "<<endl<<"severe trauma, I am pleasantly ";
+ cout<<"surprised! It's daytime on Eureka, and the orangelight enters ";
+ cout<<"my pod to gently wake me up from my slumber. But wait, who am \"I\"";
+ cout<<"? I need to remember."<<endl;
+ getch();
+ cout<<endl<<"What is my name? ";
+ gets(hero.name);
+ cout<<endl;
+ G:
+ cout<<"What is my gender?"<<endl;
+ cout<<"1. Male"<<endl;
+ cout<<"2. Female"<<endl;
+ cin>>g;
+ if (g==1)
+ {
+  strcpy(hero.gender,"Male");
+  strcpy(s1,"wife");
+  strcpy(s2,"she");
+  strcpy(s3,"her");
+  strcpy(s4,"her");
+  strcpy(s5,"herself");
+  strcpy(s6,"boy");
+  strcpy(s7,"man");
+ }
+ else if (g==2)
+ {
+  strcpy(hero.gender,"Female");
+  strcpy(s1,"husband");
+  strcpy(s2,"he");
+  strcpy(s3,"his");
+  strcpy(s4,"him");
+  strcpy(s5,"himself");
+  strcpy(s6,"girl");
+  strcpy(s7,"woman");
+ }
+ else
+ {
+  cout<<endl<<"I need to concentrate...";
+  goto G;
+ }
+ A:
+ cout<<endl<<"How old am I? ";
+ cin>>hero.age;
+ if (hero.age>0 && hero.age<18)
+ {
+  cout<<endl<<"I'm definitely not a kid!"<<endl;
+  goto A;
+ }
+ else if (hero.age>=18 && hero.age<=25)
+  hero.HP=20;
+ else if (hero.age>25 && hero.age<=35)
+  hero.HP=25;
+ else if (hero.age>35 && hero.age<=50)
+  hero.HP=20;
+ else if (hero.age>50 && hero.age<=65)
+  hero.HP=15;
+ else if (hero.age<=0 || hero.age>125)
+ {
+  cout<<endl<<"THAT'S NOT EVEN A REAL AGE!";
+  goto A;
+ }
+ else
+ {
+  cout<<endl<<"I know I have bags under my eyes, but that's because I don't sleep";
+  cout<<" enough, and "<<endl<<"definitely not because I'm old!"<<endl;
+  goto A;
+ }
+ P:
+ cout<<endl;
+ cout<<"What did I use to do?"<<endl;
+ cout<<"1. Athlete"<<endl;
+ cout<<"2. Scientist"<<endl;
+ cout<<"3. Scavenger"<<endl;
+ cout<<"4. Politician"<<endl;
+ cin>>p;
+ if (p==1)
+ {
+  cout<<endl<<"Right, I was fondly called the \"Hercules of Earth\". But I had ";
+  cout<<"far greater plans.Doping was illegal, but I wanted to represent ";
+  cout<<"Earth on the galactic level and"<<endl<<"compete with aliens from far and ";
+  cout<<"wide, and I knew that I could win with just a  little bit of help ";
+  cout<<"from dope, but MY OWN COACH busted me! So I was on Solaris togo ";
+  cout<<"to different planets to preach the \"anti-doping\" message, because";
+  cout<<" according  to my manager, it would be a good \"redemption arc\". ";
+  cout<<"*scoffs* So much for a "<<endl<<"redemption arc."<<endl;
+  hero.strength=15;
+  hero.charisma=10;
+  hero.agility=15;
+  hero.intellect=5;
+ }
+ else if (p==2)
+ {
+  cout<<endl<<"Now I wish I hadn't remembered. BUT I SWEAR IT WASN'T MY FAULT! All";
+  cout<<" I wanted to do was slightly tamper with my colleague's experiment ";
+  cout<<"so that I could win the"<<endl<<"Nobel Prize before him! But Daniel just HAD";
+  cout<<" to go and DIE, because of which the Police are on my trail, and so";
+  cout<<" I am, or I guess, I was, on the run, aboard the  Solaris."<<endl;
+  hero.strength=5;
+  hero.charisma=5;
+  hero.agility=5;
+  hero.intellect=15;
+ }
+ else if (p==3)
+ {
+  cout<<endl<<"Oh yeah, I'm a nobody. My friends and I were just \"too poor to be ";
+  cout<<"of use to the society\", or at least according to the Government we";
+  cout<<" were. So we had to fend forourselves out in the big bad world. But";
+  cout<<" we could never have expected them to"<<endl<<"take such a drastic measure. ";
+  cout<<"Due to shortage of resources, they set out to"<<endl<<"slaughter each and every";
+  cout<<" one of us, and only me and "<<s4<<" were able to survive. Sowhen ";
+  cout<<"we got to know that Solaris would be taking off with 100 of those ";
+  cout<<"scumbags,we knew that this was our opportunity to exact some good ";
+  cout<<"ol' fashioned revenge. Well, now I guess I don't have to do anything!"<<endl;
+  hero.strength=10;
+  hero.charisma=0;
+  hero.agility=10;
+  hero.intellect=10;
+ }
+ else if (p==4)
+ {
+  cout<<endl<<"I guess I have to admit it sooner or later. After 6 years of ruthless";
+  cout<<endl<<"campaigning, I wasn't ready to lose, and so, I committed vote tampering,";
+  cout<<" and my whole team, which also included my "<<s1<<", was sentenced ";
+  cout<<"to 10 years in "<<endl<<"Galactic Prison, more lovingly known as Solaris, ";
+  cout<<"and I think I have paid a high enough price for this to be my bail."<<endl;
+  hero.strength=5;
+  hero.charisma=15;
+  hero.agility=5;
+  hero.intellect=10;
+ }
+ else
+ {
+  cout<<endl<<"I need to concentrate..."<<endl;
+  goto P;
+ }
+ getch();
+ cout<<endl<<"What was my "<<s1<<"'s name? ";
+ gets(hero.SO);
+ cout<<endl<<"I still remember the day we got married. Just seeing the smile on ";
+ cout<<s3<<" face made me the happiest "<<s7<<" in the world. It had only ";
+ cout<<"been 3 months since our wedding"<<endl<<"when fate took "<<s4<<" away from ";
+ cout<<"me. Oh what a cruel mistress fate is! But I must beproductive and";
+ cout<<" survive - no, live - to my fullest potential. That's what "<<s2<<endl;
+ cout<<"would have wanted me to do."<<endl<<endl;
+ getch();
+ cout<<"What should I do now?"<<endl;
+ c2:
+ cout<<"1. Explore escape pod"<<endl;
+ C2:
+ cout<<"2. Exit escape pod"<<endl;
+ cin>>c2;
+ if (c2==1)
+ {
+  cout<<endl<<"I seem to have found a pre-recorded message!"<<endl;
+  getch();
+  clrscr();
+  cout<<endl<<"BEGINNING TRANSMISSION..."<<endl;
+  whns();
+  getch();
+  cout<<endl;
+  cout<<"Greetings AstroCitizen! If you're seeing this, then you're probably";
+  cout<<" in danger; "<<endl<<"but fret not, my child! As a human being of the ";
+  cout<<"future, everything about you hasbeen preset, from your gender, right";
+  cout<<" up to the length of your toenails! Each"<<endl<<"AstroCitizen has 4 major ";
+  cout<<"attributes: "<<endl<<endl;
+  getch();
+  cout<<"S trength (which will help you ward off any danger)"<<endl;
+  getch();
+  cout<<"C harisma (which will help you win over people, even your enemies)";
+  getch();
+  cout<<endl<<"A gility (which decides how quick and stealthy you are)"<<endl;
+  getch();
+  cout<<"I ntellect (which decides how resourceful and logical you are)"<<endl<<endl;
+  getch();
+  cout<<"So, if you ever encounter any difficulty at all, just remember that in this gameof ";
+  cout<<"life (and death), the SCAI's the limit!"<<endl;
+  getch();
+  cout<<endl<<"ENDING TRANSMISSION..."<<endl;
+  whns();
+  getch();
+  cout<<endl<<"Although that WAS pretty strange, I feel more informed!"<<endl;
+  ++v;
+  int1(5);
+  cout<<endl<<"*YOU WILL NOW BE SHOWN HOW MUCH YOUR STATS INCREASED OR DECREASED ";
+  cout<<"BY AFTER EVERY CHOICE*"<<endl;
+  getch();
+  cout<<endl<<"Now what should I do?"<<endl;
+  goto C2;
+ }
+ else if (c2==2)
+ {
+  cout<<endl<<"I guess I have seen everything I need to see!"<<endl;
+  getch();
+ }
+ else
+ {
+  cout<<endl<<"This is no time to be messing around! I need to be productive!"<<endl;
+  if (v==1)
+   goto C2;
+  else if (v==0)
+   goto c2;
+ }
+ clrscr();
+ cout<<endl;
+ cout<<"As I step out into the world, I immediately feel the difference in ";
+ cout<<"the quality  of oxygen here, but I quickly acclimatize. I see that ";
+ cout<<"the escape pod is badly "<<endl<<"damaged, and I need fuel, resin, and metal ";
+ cout<<"to repair it and escape from this"<<endl<<"hellhole. I see three distant ";
+ cout<<"biomes - rocky mountains, a dense blue forest, anda white desert. ";
+ cout<<"I could get one of those components from there. This seems like a ";
+ cout<<"crucial decision. I should think about my strengths and weaknesses ";
+ cout<<"before"<<endl<<"making the choice."<<endl;
+ getch();
+ C3:
+ cout<<endl;
+ cout<<"Where should I go?"<<endl;
+ cout<<"1. Mountains"<<endl;
+ cout<<"2. Forest"<<endl;
+ cout<<"3. Desert"<<endl;
+ cin>>c3;
+ if (c3==1)
+ {
+  cout<<endl;
+  cout<<"Sure, I guess climbing a 1,000 foot mountain should cure my vertigo!";
+  getch();
+  clrscr();
+  cout<<endl;
+  cout<<"The majestic mountains are a sight to behold. Their towering personalities";
+  cout<<endl<<"overshadow my own. Nevertheless, I decide to scale them."<<endl;
+  getch();
+  cout<<endl<<"As I reach the summit, the sun is directly overhead, and the scorching heat "<<endl<<"makes";
+  cout<<" me THIRSTY, HUNGRY, and TIRED. Suddenly, I spot a cave in the distance.";
+  cout<<"   It could be dangerous, but I could probably also rest there."<<endl;
+  getch();
+  C41:
+  cout<<endl<<"What should I do?"<<endl;
+  cout<<"1. Enter the cave"<<endl;
+  cout<<"2. Leave"<<endl;
+  cin>>c41;
+  if (c41==1)
+  {
+   cout<<endl<<"Sure, I guess I'm a brave "<<s6<<"!"<<endl<<endl;
+   getch();
+   cout<<"As I enter the cave, an ominous feeling settles into me. That's when";
+   cout<<" I see IT."<<endl<<"Words can't seem to express its monstrosity. With its ";
+   cout<<"deep red eyes and gleamingfangs and claws, it seems thirsty for ";
+   cout<<"blood. Its midnight blue fur covers its   entire 8 foot long body."<<endl;
+   getch();
+   C42:
+   cout<<endl<<"What should I do?"<<endl;
+   cout<<"1. Fight"<<endl;
+   cout<<"2. Run away"<<endl;
+   cin>>c42;
+   if (c42==1)
+   {
+    if (p==1 || p==3)
+    {
+     cout<<endl<<"I decide that I'm strong enough to take on this beast. ";
+     battle();
+     getch();
+     cout<<"I grab a nearby rock and charge at it with all my might. As I get closer,";
+     cout<<" I see it charging towards me aswell. Its claws pierce into my ";
+     cout<<"flesh, but as soon as it tries to end me with itsfangs, I get ";
+     cout<<"close enough to bludgeon its head. ";
+     getch();
+     punch();
+     cout<<"Multiple times. ";
+     getch();
+     punch();
+     sound(1);
+     delay(1000);
+     punch();
+     sound(1);
+     delay(1000);
+     punch();
+     cout<<"It immediately  stops moving. As the blood sprays onto my face, I realize why ";
+     cout<<"humans are on top of the food chain. I strangely feel...";
+     getch();
+     cout<<" empowered!"<<endl<<endl;
+     getch();
+     if (v==1)
+     {
+      HP1(-5);
+      str1(5);
+      agl1(5);
+     }
+     else if (v==0)
+     {
+      HP2(-5);
+      str2(5);
+      agl2(5);
+     }
+     good();
+     cout<<endl<<"* FAT OBTAINED *"<<endl;
+     cout<<"I guess this fat could have a high enough calorific value to fuel";
+     cout<<" my escape pod!"<<endl;
+     ++comp;
+     getch();
+     cout<<"As I think about returning, I see the beast writhing in pain. Although";
+     cout<<" I feel "<<endl<<"like I should put it out of its misery, under the current";
+     cout<<" circumstances, I must admit that it looks like an appetizing meal."<<endl;
+     getch();
+     C43:
+     cout<<endl<<"What should I do?"<<endl;
+     cout<<"1. Kill it and eat its flesh"<<endl;
+     cout<<"2. Put it out of its misery and leave"<<endl;
+     cin>>c43;
+     if (c43==1)
+     {
+      cout<<endl<<"It may have been a vicious beast, but I'm a predator for survival. And";
+      cout<<" as I tearinto its flesh, I understand the basic necessities of life."<<endl;
+      hero.morality-=5;
+      getch();
+      if (v==1)
+       HP1(5);
+      else if (v==0)
+       HP2(5);
+      cout<<endl<<"As I look for some place to wash my blood-stained hands, I notice";
+      cout<<" a glistening  water body not far away."<<endl;
+      getch();
+      C44:
+      cout<<endl<<"What should I do?"<<endl;
+      cout<<"1. Explore"<<endl;
+      cout<<"2. Leave"<<endl;
+      cin>>c44;
+      if (c44==1)
+      {
+       cout<<endl<<"I approach the water body to find that it's a relatively clean";
+       cout<<"-looking fountain of water."<<endl;
+       getch();
+       C45:
+       cout<<endl<<"What should I do?"<<endl;
+       cout<<"1. Drink water"<<endl;
+       cout<<"2. Rest"<<endl;
+       cout<<"3. Leave"<<endl;
+       cin>>c45;
+       if (c45==1)
+       {
+	cout<<endl<<"Ah, that seems to have quenched my thirst!"<<endl;
+	if (v==1)
+	 HP1(5);
+	else if (v==0)
+	 HP2(5);
+	cout<<endl<<"Oh wait, what's this? I don't feel so good! I start vomiting ";
+	cout<<"blood, and as I"<<endl<<"choke on my own vomit, I realize that looks ";
+	cout<<"can be deceiving.";
+	getch();
+	cout<<endl<<endl<<endl<<"                                   YOU PERISHED";
+	title();
+	getch();
+	goto R;
+       }
+       else if (c45==2)
+       {
+	cout<<endl<<"I find a \"comfortable\" spot to lie on, and as soon as I lay";
+	cout<<" my weary body on theground, I find myself immediately dozing";
+	cout<<" off."<<endl;
+	getch();
+	if (v==1)
+	 HP1(5);
+	else if (v==0)
+	 HP2(5);
+	cout<<endl<<"My back feels numb from lying on hard rock, but I feel well ";
+	cout<<"rested and ready to conquer this world! I guess that starts ";
+	cout<<"with getting out of this damp, musty    cave!"<<endl;
+	getch();
+	goto C4;
+       }
+       else if (c45==3)
+       {
+	cout<<endl<<"I guess I should leave now."<<endl;
+	getch();
+	goto C4;
+       }
+       else
+       {
+	cout<<endl<<"I shouldn't just stand here and waste my time.";
+	goto C45;
+       }
+      }
+      else if (c44==2)
+      {
+       cout<<endl<<"I guess I should leave now."<<endl;
+       getch();
+       goto C4;
+      }
+      else
+      {
+       cout<<endl<<"I have to do something!";
+       goto C44;
+      }
+     }
+     else if (c43==2)
+     {
+      cout<<endl<<"I couldn't bear to see another living creature in pain. So, as ";
+      cout<<"any empathetic   human would do in such a situation, I took a big ";
+      cout<<"boulder and caved its skull in."<<endl;
+      getch();
+      punch();
+      cout<<"*shivers* I can't look at it anymore. I have to leave. Now."<<endl;
+      getch();
+      goto C4;
+     }
+     else
+     {
+      cout<<endl<<"I can't bear to look at it this way! I must do something!";
+      goto C43;
+     }
+    }
+    else if (p==2 || p==4)
+    {
+     cout<<endl<<"I try in vain to defend myself from my predator, but my puny physique";
+     cout<<" was no    match for this overpowered beast. My punches don't even seem ";
+     cout<<"to ruffle its fur! It was almost as if it was restraining itself just";
+     cout<<" to savour drawing my blood   from my weak form for a longer time.";
+     cout<<" And as I take my final breath, the last    thing that I see is it";
+     cout<<" digging its fangs into my chest.";
+     getch();
+     cout<<endl<<endl<<endl<<"                                   YOU PERISHED";
+     title();
+     getch();
+     goto R;
+    }
+   }
+   else if (c42==2)
+   {
+    cout<<endl<<"As soon as I recovered from my shock, I decided to run for my life";
+    cout<<". But running on rocky terrain isn't as easy as I thought it ";
+    cout<<"would be. As I trip over my feet and crack my skull on a rock, I ";
+    cout<<"see the beast lick its lips looking at my dying body, as the ";
+    cout<<"world slowly fades to black.";
+    getch();
+    cout<<endl<<endl<<endl<<"                                   YOU PERISHED";
+    title();
+    getch();
+    goto R;
+   }
+   else
+   {
+    cout<<endl<<"Although I am petrified, I have to do something right now!";
+    goto C42;
+   }
+  }
+  else if (c41==2)
+  {
+   cout<<endl<<"Nope. Just nope. The only good thing video games have ever taught ";
+   cout<<"me is to not  enter dark, musty caves alone."<<endl;
+   getch();
+   C4:
+   cout<<endl<<"As I move away from the caves to some place a bit more safe, I come";
+   cout<<" across a "<<endl<<"group of hooded individuals, all huddled around each other. Although";
+   cout<<" I feel "<<endl<<"extremely curious, I decide to curb my enthusiasm to see ";
+   cout<<"what plan they are "<<endl<<"cooking up."<<endl<<endl;
+   getch();
+   cout<<"Wait, what's that? Looks like they are a group of cultists planning";
+   cout<<" to purge a  nearby village tomorrow!"<<endl;
+   getch();
+   C46:
+   cout<<endl<<"What should I do?"<<endl;
+   cout<<"1. Run away"<<endl;
+   cout<<"2. Inform the village"<<endl;
+   cout<<"3. Convince them"<<endl;
+   cout<<"4. Join them"<<endl;
+   cin>>c46;
+   if (c46==1)
+   {
+    cout<<endl<<"I am not able to comprehend how people could embody literal evil. I";
+    cout<<" am truly    disgusted. I decide to flee from the scene immediately."<<endl;
+    getch();
+    if (hero.agility>=10)
+    {
+     cout<<endl<<"I maneuver around the group successfully to escape from certain ";
+     cout<<"demise. I feel  like a coward, but I realize that I need to prioritize";
+     cout<<" my safety over that"<<endl<<"of the villagers."<<endl;
+     getch();
+     hero.morality-=5;
+     goto V;
+    }
+    else
+    {
+     cout<<endl<<"I try to maneuver around the group, but my body isn't able to ";
+     cout<<"cope with my "<<endl<<"thoughts. As soon as I get spotted by the group, ";
+     cout<<"they pick up their rifles and  gun me down immediately. As the ";
+     cout<<"bullets obliterate my body, I realize that I "<<endl<<"should have done ";
+     cout<<"something else to save myself, and probably even the villagers.";
+     getch();
+     cout<<endl<<endl<<endl<<"                                   YOU PERISHED";
+     title();
+     getch();
+     goto R;
+    }
+   }
+   else if (c46==2)
+   {
+    cout<<endl<<"I feel that as a living creature, it is my duty and moral responsibility";
+    cout<<" to savethe villagers from their impending doom. I have to do this."<<endl;
+    getch();
+    hero.morality+=5;
+    goto V;
+   }
+   else if (c46==3)
+   {
+    cout<<endl<<"I decide that I should be diplomatic about this and reach out to ";
+    cout<<"their "<<endl<<"empathetic side."<<endl;
+    getch();
+    if (hero.charisma>=10)
+    {
+     cout<<endl<<"I am able to convince them with my immeasurable charm. They should";
+     cout<<" not be a "<<endl<<"threat to the villagers, at least for now."<<endl;
+     getch();
+     hero.morality+=10;
+     goto V;
+    }
+    else
+    {
+     cout<<endl<<"Why did I think that this plan would ever work! As soon as I step";
+     cout<<" out to try to talk to them, my heart starts pounding harder than";
+     cout<<" it ever has. As soon as they see me, I am not able to control my";
+     cout<<" heart beats, and I flop dead in front of "<<endl<<"them, killed ";
+     cout<<"by a cardiac arrest.";
+     getch();
+     cout<<endl<<endl<<endl<<"                                   YOU PERISHED";
+     title();
+     getch();
+     goto R;
+    }
+   }
+   else if (c46==4)
+   {
+    cout<<endl<<"I rationalize that I won't be able to take on them alone, and I";
+    cout<<" definitely won'tbe able to convince them to not attack the village,";
+    cout<<" so I guess if you can't beat'em, join 'em! *grins*"<<endl;
+    getch();
+    hero.morality-=10;
+    ++j;
+    goto V;
+   }
+   else
+   {
+    cout<<endl<<"I need to take action right now!"<<endl;
+    goto C46;
+   }
+  }
+  else
+  {
+   cout<<endl<<"I can't just stand here and while away my time!"<<endl;
+   goto C41;
+  }
+ }
+ else if (c3==2)
+ {
+  cout<<endl;
+  cout<<"Sure, I guess while I'm at it I'll catch some Plant-type Pokemon as";
+  cout<<" well!";
+  getch();
+  clrscr();
+  cout<<endl<<"The towering wooden behemoths inspire awe as well as fear in me, as I walk";
+  cout<<" on   the moss-trodden ground. Man, this humidity is killing me! Hiking";
+  cout<<" isn't as easy as it seems! I quickly realize that I have burned through";
+  cout<<" all my resources, and now I feel HUNGRY and THIRSTY!"<<endl<<endl;
+  getch();
+  cout<<"Wait, what's that in the distance? Are those... juicy berries? They ";
+  cout<<"could cure  my hunger and thirst at the same time, but they could also";
+  cout<<" potentially kill me!"<<endl;
+  getch();
+  C51:
+  cout<<endl<<"What should I do?"<<endl;
+  cout<<"1. Check berries"<<endl;
+  cout<<"2. Explore another area"<<endl;
+  cin>>c51;
+  if (c51==1)
+  {
+   if (p==2)
+   {
+    cout<<endl;
+    cout<<"But of course! These definitely are \"ribes rubrum\", more commonly";
+    cout<<" known as"<<endl<<"redcurrants! They're definitely safe to eat."<<endl;
+   }
+   else if (p==3)
+   {
+    cout<<endl;
+    cout<<"They're definitely redcurrants. I can recall countless nights surviving";
+    cout<<" on just a fistful of these berries, cursing my very existence. But";
+    cout<<" I knew I couldn't    give in, because I had to survive, just for ";
+    cout<<s4<<". Anyways, long monologue aside, these are safe to eat."<<endl;
+   }
+   else if (p==1 || p==4)
+   {
+    cout<<endl;
+    cout<<"These definitely look like good ol' blueberries, but then again, I";
+    cout<<" could also bewrong! \"Berries blue, good for you; berries red, ";
+    cout<<" you'll be dead!\" That's how   the saying goes, right? I think so!";
+    cout<<" At least I hope so!"<<endl;
+   }
+   getch();
+   C52:
+   cout<<endl<<"What should I do now?"<<endl;
+   cout<<"1. Eat them"<<endl;
+   cout<<"2. Avoid"<<endl;
+   cin>>c52;
+   if (c52==1)
+   {
+    if (p==2 || p==3)
+    {
+     cout<<endl<<"I doubt my own knowledge for a second as I gulp down a handful of";
+     cout<<" those berries,but seeing that nothing has happened to me yet, I";
+     cout<<" must have been right!"<<endl;
+     if (v==1)
+      HP1(5);
+     else if (v==0)
+      HP2(5);
+     cout<<"Great. Now that I'm perfectly healthy, I should continue with my ";
+     cout<<"quest."<<endl;
+     getch();
+     C53:
+     cout<<endl<<"1. Explore deeper into the woods"<<endl;
+     cout<<"2. Leave"<<endl;
+     cin>>c53;
+     if (c53==1)
+     {
+      good();
+      cout<<endl<<"* WOOD OBTAINED *"<<endl;
+      cout<<"This will definitely be enough to fuel my escape pod!"<<endl;
+      ++comp;
+      getch();
+      goto C5;
+     }
+     else if (c53==2)
+      goto C5;
+     else
+     {
+      cout<<endl<<"I need to do something!"<<endl;
+      goto C53;
+     }
+    }
+    else if (p==1 || p==4)
+    {
+     cout<<endl<<"I doubt my own knowledge for a second as I gulp down a handful of";
+     cout<<"those berries, but seeing that nothing has happened to me yet, I";
+     cout<<" must have been right!"<<endl;
+     if (v==1)
+      HP1(5);
+     else if (v==0)
+      HP2(5);
+     cout<<endl<<"Wait, what's happening to me! I don't feel so good! I feel like ";
+     cout<<"I'm going to"<<endl<<"vomit out my intestines!"<<endl;
+     cout<<"As I lay in a pool of my own blood, I realize that I, in fact, ";
+     cout<<"had made the"<<endl<<"wrong choice.";
+     getch();
+     cout<<endl<<endl<<endl<<"                                    YOU PERISHED";
+     title();
+     getch();
+     goto R;
+    }
+   }
+   else if (c52==2)
+   {
+    cout<<endl<<"I'm not too sure whether they are edible or not, so I best stay ";
+    cout<<"clear of them   for now."<<endl;
+    getch();
+    goto C5;
+   }
+   else
+   {
+    cout<<endl<<"Time is money, and I'm going bankrupt! I need to do something!"<<endl;
+    goto C52;
+   }
+  }
+  else if (c51==2)
+   goto C5;
+  else
+  {
+   cout<<endl<<"I need to make a decision!"<<endl;
+   goto C51;
+  }
+  C5:
+  cout<<endl<<"I guess I'm ready to leave this area."<<endl<<endl;
+  getch();
+  cout<<"As I go away from the beaten path, I come across a pristine body of";
+  cout<<" water. The  glistening ripples attract me, but also remind me of my ";
+  cout<<"human needs. I feel     thirsty, but I think I should secure the area ";
+  cout<<"from possible intruders first."<<endl;
+  getch();
+  C54:
+  cout<<endl<<"What should I do?"<<endl;
+  cout<<"1. Scout the area"<<endl;
+  cout<<"2. Drink water"<<endl;
+  cin>>c54;
+  if (c54==1)
+  {
+   cout<<endl<<"I guess I can control my urges for a little longer."<<endl;
+   if (v==1)
+    HP1(-5);
+   else if (v==0)
+    HP2(-5);
+   cout<<endl<<"As I patrol the periphery, I spot a gang of cultists lurking around.";
+   cout<<" They seem  to be planning to purge the village tomorrow!"<<endl;
+   getch();
+   C55:
+   cout<<endl<<"What should I do?"<<endl;
+   cout<<"1. Run away"<<endl;
+   cout<<"2. Inform the village"<<endl;
+   cout<<"3. Try to convince them"<<endl;
+   cout<<"4. Join them"<<endl;
+   cin>>c55;
+   if (c55==1)
+   {
+    cout<<endl<<"I am not able to comprehend how people could embody literal evil. I";
+    cout<<" am truly    disgusted. I decide to flee from the scene immediately."<<endl;
+    getch();
+    if (hero.agility>=10)
+    {
+     cout<<endl<<"I maneuver around the group successfully to escape from certain ";
+     cout<<"demise. I feel  like a coward, but I realize that I need to prioritize";
+     cout<<" my safety over that"<<endl<<"of the villagers."<<endl;
+     getch();
+     hero.morality-=5;
+     goto V;
+    }
+    else
+    {
+     cout<<endl<<"I try to maneuver around the group, but my body isn't able to ";
+     cout<<"cope with my "<<endl<<"thoughts. As soon as I get spotted by the group, ";
+     cout<<"they pick up their rifles and  gun me down immediately. As the ";
+     cout<<"bullets obliterate my body, I realize that I "<<endl<<"should have done ";
+     cout<<"something else to save myself, and probably even the villagers.";
+     getch();
+     cout<<endl<<endl<<endl<<"                                   YOU PERISHED";
+     title();
+     getch();
+     goto R;
+    }
+   }
+   else if (c55==2)
+   {
+    cout<<endl<<"I feel that as a living creature, it is my duty and moral responsibility";
+    cout<<" to savethe villagers from their impending doom. I have to do this."<<endl;
+    getch();
+    hero.morality+=5;
+    goto V;
+   }
+   else if (c55==3)
+   {
+    cout<<endl<<"I decide that I should be diplomatic about this and reach out to ";
+    cout<<"their "<<endl<<"empathetic side."<<endl;
+    getch();
+    if (hero.charisma>=10)
+    {
+     cout<<endl<<"I am able to convince them with my immeasurable charm. They should";
+     cout<<" not be a "<<endl<<"threat to the villagers, at least for now."<<endl;
+     getch();
+     hero.morality+=10;
+     goto V;
+    }
+    else
+    {
+     cout<<endl<<"Why did I think that this plan would ever work! As soon as I step";
+     cout<<" out to try to talk to them, my heart starts pounding harder than";
+     cout<<" it ever has. As soon as they see me, I am not able to control my";
+     cout<<" heart beats, and I flop dead in front of "<<endl<<"them, killed ";
+     cout<<"by a cardiac arrest.";
+     getch();
+     cout<<endl<<endl<<endl<<"                                   YOU PERISHED";
+     title();
+     getch();
+     goto R;
+    }
+   }
+   else if (c55==4)
+   {
+    cout<<endl<<"I rationalize that I won't be able to take on them alone, and I";
+    cout<<" definitely won'tbe able to convince them to not attack the village,";
+    cout<<" so I guess if you can't beat'em, join 'em! *grins*"<<endl;
+    getch();
+    hero.morality-=10;
+    ++j;
+    goto V;
+   }
+   else
+   {
+    cout<<endl<<"I need to take action right now!"<<endl;
+    goto C55;
+   }
+  }
+  else if (c54==2)
+  {
+   cout<<endl<<"Ah water, the elixir of life! It rejuvinates and energizes me,";
+   cout<<" and I feel ready to tackle any problem life could throw at me!"<<endl<<endl;
+   if (v==1)
+    HP1(5);
+   else if (v==0)
+    HP2(5);
+   cout<<endl<<"\"Not so fast, punk!\""<<endl<<endl;
+   getch();
+   cout<<"I turn around to see that I have been surrounded by a gang of cultists.";
+   cout<<" I am    cornered and have no where to run. I have to act fast."<<endl;
+   C56:
+   cout<<endl<<"What should I do?"<<endl;
+   cout<<"1. Fight them all"<<endl;
+   cout<<"2. Convince them to spare you"<<endl;
+   cin>>c56;
+   if (c56==1)
+   {
+    if (hero.strength>=10 && hero.agility >=10)
+    {
+     cout<<endl<<"I scan my environment and spot 7 of them, excluding their ";
+     cout<<"leader standing at theback. I decide to take them out one by one."<<endl;
+     battle();
+     getch();
+     cout<<endl<<"I pick up a branch and decide to use it to my advantage. I";
+     cout<<" charge at one of     them, and as he swings at me, I duck under it ";
+     cout<<"and stab his kidney.";
+     getch();
+     punch();
+     sound(1);
+     delay(2000);
+     punch();
+     cout<<" He kneels andfalls to the ground. There are 6 left."<<endl;
+     getch();
+     cout<<endl<<"Two of them charge at me from opposite directions.";
+     getch();
+     punch();
+     cout<<" I step aside to bash one's   skull into the other's. Both of them";
+     cout<<" slowly bleed out on the ground. There are 4left."<<endl;
+     getch();
+     cout<<endl<<"I look around to see a guy charging at me with a dagger. While I'm distracted, ";
+     cout<<" two of them put me in a chokehold. I feel breathless; like I'm about";
+     cout<<" to faint. Ithink my time in this world has come to an end. I just ";
+     cout<<"wish I hadn't died like  this...";
+     getch();
+     cout<<endl<<endl<<endl<<"                                  YOU PERISHED"<<endl;
+     getch();
+     cout<<endl<<"\"Get up, "<<(hero.name)<<"! Get up and fight, for me!\""<<endl;
+     getch();
+     cout<<endl<<"A familiar voice calls out to me, awakening me.";
+     getch();
+     punch();
+     sound(1);
+     delay(1000);
+     punch();
+     sound(1);
+     delay(500);
+     punch();
+     cout<<" I elbow both of them in the     stomach, and turn around to punch ";
+     cout<<"one of them in the ribs and uppercut the      other.  Then I quickly";
+     cout<<" pick up my branch and stab the approaching enemy. There  is 1     left."<<endl;
+     getch();
+     cout<<endl<<"As soon as I gaze at the final one, I see fear in his eyes. Although";
+     cout<<" he is twicemy size and has a gun, he starts running immediately. ";
+     cout<<"I hold the branch like a  javelin and throw it with all my strength.";
+     getch();
+     cout<<" It pierces his backbone and paralyzeshim. Now there's just the ";
+     cout<<"leader left."<<endl;
+     getch();
+     cout<<endl<<"I look around to find him but he seems to have vanished. Nevertheless, I pick";
+     cout<<" upthe gun his goon dropped and arm myself with it. Suddenly, I";
+     cout<<" hear rustling in   the bushes behind me. I see the cloaked leader";
+     cout<<" trying to escape. I need to do   something. Fast."<<endl;
+     getch();
+     C57:
+     cout<<endl<<"What should I do?"<<endl;
+     cout<<"1. Kill him"<<endl;
+     cout<<"2. Spare him"<<endl;
+     cin>>c57;
+     if (c57==1)
+     {
+      cout<<endl<<"\"Not so fast, punk!\""<<endl<<endl;
+      getch();
+      cout<<"BANG!"<<endl<<"One shot through his chest. That's all that it ";
+      cout<<"took to end his life."<<endl<<endl;
+      ++k;
+      hero.morality-=5;
+      getch();
+      cout<<"I should just go to the village now to inform them about this ";
+      cout<<"incident, and"<<endl<<"maybe even take something in return."<<endl;
+      getch();
+      goto V;
+     }
+     else if (c57==2)
+     {
+      cout<<endl<<"I don't think I need to kill him now. He wouldn't dare to ever ";
+      cout<<"mess with me"<<endl<<"again."<<endl<<endl;
+      ++(++k);
+      hero.morality+=5;
+      getch();
+      cout<<"Phew! I think that's enough workout for a week! I should go to ";
+      cout<<"the village to   inform them about this incident, and maybe even ";
+      cout<<"get something in return!"<<endl;
+      getch();
+      goto V;
+     }
+     else
+     {
+      cout<<endl<<"I can not waste any time!"<<endl;
+      goto C57;
+     }
+    }
+    else
+    {
+     cout<<endl<<"I try to recall whatever I learned from watching Bruce Lee movies";
+     cout<<" and playing   Mortal Kombat, but by then I get charged by all of them at";
+     cout<<" once, and they shoot,stab, and bludgeon me until I lay there, lifeless.";
+     cout<<" I guess movies and real life are different after all.";
+     getch();
+     cout<<endl<<endl<<endl<<"                                     YOU PERISHED";
+     title();
+     getch();
+     goto R;
+    }
+   }
+   else if (c56==2)
+   {
+    if (hero.charisma>=5)
+    {
+     cout<<endl<<"\"Alright fellas, you don't need to hurt me now!\"";
+     getch();
+     cout<<endl<<"\"And why SHOULDN'T we do so, "<<s6<<"?\"";
+     getch();
+     cout<<endl<<"\"I saw you planning to loot the nearby village, and if you tell";
+     cout<<" me why, maybe we can agree on a tradeoff.\"";
+     getch();
+     cout<<endl<<"\"We just need resources to keep ourselves warm during this harsh";
+     cout<<" winter, that's  all! Whaddaya got?\"";
+     getch();
+     if (comp==1)
+     {
+      cout<<endl<<"\"Well, I've got some fine wood here! Would you fellas be interested";
+      cout<<" in some of   it?\"";
+      getch();
+      cout<<endl<<"\"SOME OF IT?! WE'RE GONNA TAKE ALL OF IT!\"";
+      getch();
+      cout<<endl<<"\"If you want all of it, then you have to guarantee the safety of";
+      cout<<" the village.\"";
+      getch();
+      cout<<endl<<"\"Alright sure, whatever.\"";
+      getch();
+      cout<<endl<<"\"You fellas drive a hard bargain, but I guess we've come to a ";
+      cout<<"civilized deal!"<<endl<<" Here's the wood. Good day to you fellas!\""<<endl;
+      --comp;
+      getch();
+      cout<<endl<<"This will definitely hamper my progress, but I guess I had to do";
+      cout<<" what I had to  do.";
+      hero.morality+=5;
+      getch();
+      goto V;
+     }
+     else if (comp==0)
+     {
+      cout<<endl<<"\"I don't really have anything valuable!\"";
+      getch();
+      cout<<endl<<"\"Then I guess you'll have to pay with your blood!\"";
+      getch();
+      cout<<endl<<endl<<endl<<"                                YOU PERISHED";
+      title();
+      getch();
+      goto R;
+     }
+    }
+    else
+    {
+     cout<<endl<<"As soon as I step out to try to talk to them, my heart starts ";
+     cout<<"pounding harder   than it ever has. I am not able to control my ";
+     cout<<" heart beats, and I flop dead in  front of them, killed by a ";
+     cout<<"cardiac arrest.";
+     getch();
+     cout<<endl<<endl<<endl<<"                                  YOU PERISHED";
+     title();
+     getch();
+     goto R;
+    }
+   }
+   else
+   {
+    cout<<endl<<"I don't have any time to waste right now!"<<endl;
+    goto C56;
+   }
+  }
+  else
+  {
+   cout<<endl<<"I can't just stand here and do nothing!"<<endl;
+   goto C54;
+  }
+ }
+ else if (c3==3)
+ {
+  cout<<endl<<"I guess the scenic beauty of the desert wasteland awaits me!";
+  getch();
+  clrscr();
+  cout<<endl<<"Vast expanses of white sand glistening under scorching sunlight";
+  cout<<" is all that the eye can see. I am definitely not equipped for such";
+  cout<<" an expedition. I burn throughthe resources I had, but it wasn't ";
+  cout<<"even enough to last me 3-4 hours! I feel HOT,THIRSTY, and HUNGRY!"<<endl;
+  getch();
+  cout<<endl<<"Then, as if my prayers had been answered, I spot a oasis in the ";
+  cout<<"distance,       complete with large blue palm trees and a small pond."<<endl;
+  getch();
+  C61:
+  cout<<endl<<"But is it really REAL?"<<endl;
+  cout<<"1. Yes"<<endl;
+  cout<<"2. No"<<endl;
+  cin>>c61;
+  if (c61==1)
+  {
+   cout<<endl<<"I guess I just have to trust my gut and follow the trail!"<<endl<<endl;
+   getch();
+   cout<<"It WAS real after all! However, I also see 3 decomposing bodies ";
+   cout<<"underneath the  palm trees. Although the sight is extremely gruesome";
+   cout<<" and disturbing, I have to  do something for survival."<<endl;
+   getch();
+   C62:
+   cout<<endl<<"What should I do?"<<endl;
+   cout<<"1. Eat the fruits"<<endl;
+   cout<<"2. Drink the water"<<endl;
+   cout<<"3. Return"<<endl;
+   if (p==2 || p==3)
+    cout<<"4. Collect the bones"<<endl;
+   cin>>c62;
+   if (c62==1 || c62 ==2)
+   {
+    cout<<endl<<"I feel energized and revitalized to face the world!"<<endl;
+    if (v==1)
+     HP1(5);
+    else if (v==0)
+     HP2(5);
+    cout<<endl<<"What's this? I seem to have been poisoned! I start foaming from ";
+    cout<<"my mouth, and mylimbs get paralyzed. As I hold my hand out and try";
+    cout<<" to get a gasp of breath, I"<<endl<<"realize that I shouln't have consumed ";
+    cout<<"something that has been near decomposing  bodies for a long time.";
+    getch();
+    cout<<endl<<endl<<endl<<"                                    YOU PERISHED";
+    title();
+    getch();
+    goto R;
+   }
+   else if (c62==3)
+    goto C6;
+   else if (c62==4)
+   {
+    cout<<endl<<"I close my nose with one of my hands and start breathing from my ";
+    cout<<"mouth to block out the stench, and use my other hand to dig around";
+    cout<<" in their bodies to pluck outtheir femurs. ";
+    getch();
+    cout<<"That should get me the most amount of bone marrow to convert into fuel."<<endl<<endl;
+    getch();
+    good();
+    cout<<"* BONE MARROW OBTAINED *"<<endl<<endl;
+    ++comp;
+    getch();
+    cout<<"Although I got what I needed, I pretty sure I contracted multiple";
+    cout<<" venereal"<<endl<<"diseases!"<<endl;
+    if (v==1)
+     HP1(-5);
+    else if (v==0)
+     HP2(-5);
+    goto C6;
+   }
+  }
+  else if (c61==2)
+   cout<<endl<<"Nah, it's probably too good to be true."<<endl;
+  else
+  {
+   cout<<"I need to decide now!"<<endl;
+   goto C61;
+  }
+  C6:
+  getch();
+  cout<<endl<<"I wander aimlessly throughout the desert, until I realize that";
+  cout<<" it is night time already. I feel completely exhausted."<<endl;
+  if (v==1)
+   HP1(-5);
+  else if (v==0)
+   HP2(-5);
+  cout<<endl<<"I spot a huge house in the middle of nowhere. It reminds me of a ";
+  cout<<"cartoon"<<endl<<"related to a scared animal (perhaps a dog?), but I don't ";
+  cout<<"let it bother me too   much. The lights seem to have been dimmed down";
+  cout<<" but I'm still able to spot"<<endl<<"silhouettes. They could be friendly,";
+  cout<<" but they could also be dangerous."<<endl;
+  getch();
+  C63:
+  cout<<endl<<"What should I do?"<<endl;
+  cout<<"1. Knock on the door"<<endl;
+  cout<<"2. Sneak around"<<endl;
+  cin>>c63;
+  if (c63==1)
+  {
+   cout<<endl<<"As soon as the door opens, I am greeted by many hooded individuals";
+   cout<<" with an      assortment of weapons to slaughter me in ten different ways!"<<endl;
+   getch();
+   C64:
+   cout<<endl<<"What should I do?"<<endl;
+   cout<<"1. Fight them all"<<endl;
+   cout<<"2. Convince them to spare you"<<endl;
+   cin>>c64;
+   if (c64==1)
+   {
+    if (hero.strength>=10 && hero.agility >=10)
+    {
+     cout<<endl<<"I scan my environment and spot 7 of them, excluding their ";
+     cout<<"leader standing at theback. I decide to take them out one by one."<<endl;
+     battle();
+     getch();
+     cout<<endl<<"I pick up a branch and decide to use it to my advantage. I";
+     cout<<" charge at one of     them, and as he swings at me, I duck under it ";
+     cout<<"and stab his kidney.";
+     getch();
+     punch();
+     sound(1);
+     delay(2000);
+     punch();
+     cout<<" He kneels andfalls to the ground. There are 6 left."<<endl;
+     getch();
+     cout<<endl<<"Two of them charge at me from opposite directions.";
+     getch();
+     punch();
+     cout<<" I step aside to bash one's   skull into the other's. Both of them";
+     cout<<" slowly bleed out on the ground. There are 4left."<<endl;
+     getch();
+     cout<<endl<<"I look around to see a guy charging at me with a dagger. While I'm distracted, ";
+     cout<<" two of them put me in a chokehold. I feel breathless; like I'm about";
+     cout<<" to faint. Ithink my time in this world has come to an end. I just ";
+     cout<<"wish I hadn't died like  this...";
+     getch();
+     cout<<endl<<endl<<endl<<"                                  YOU PERISHED"<<endl;
+     getch();
+     cout<<endl<<"\"Get up, "<<(hero.name)<<"! Get up and fight, for me!\""<<endl;
+     getch();
+     cout<<endl<<"A familiar voice calls out to me, awakening me.";
+     getch();
+     punch();
+     sound(1);
+     delay(1000);
+     punch();
+     sound(1);
+     delay(500);
+     punch();
+     cout<<" I elbow both of them in the     stomach, and turn around to punch ";
+     cout<<"one of them in the ribs and uppercut the      other. Then I quickly";
+     cout<<" pick up my branch and stab the approaching enemy. There is1 left."<<endl;
+     getch();
+     cout<<endl<<"As soon as I gaze at the final one, I see fear in his eyes. Although";
+     cout<<" he is twicemy size and has a gun, he starts running immediately. ";
+     cout<<"I hold the branch like a  javelin and throw it with all my strength.";
+     getch();
+     cout<<" It pierces his backbone and paralyzeshim. Now there's just the ";
+     cout<<"leader left."<<endl;
+     getch();
+     cout<<endl<<"I look around but he seems to have vanished. Nevertheless, I pick";
+     cout<<" up the gun hisgoon dropped and arm myself with it. Suddenly, I";
+     cout<<" hear the creaking of the door  behind me. I see the cloaked leader";
+     cout<<" trying to escape. I need to do something.   Fast."<<endl;
+     getch();
+     C65:
+     cout<<endl<<"What should I do?"<<endl;
+     cout<<"1. Kill him"<<endl;
+     cout<<"2. Spare him"<<endl;
+     cin>>c65;
+     if (c65==1)
+     {
+      cout<<endl<<"\"Not so fast, punk!\""<<endl<<endl;
+      getch();
+      cout<<"BANG!"<<endl<<"One shot through his chest. That's all that it ";
+      cout<<"took to end his life."<<endl<<endl;
+      ++k;
+      hero.morality-=5;
+      getch();
+      cout<<"I should just go to the village now to inform them about this ";
+      cout<<"incident, and"<<endl<<"maybe even take something in return."<<endl;
+      getch();
+      goto V;
+     }
+     else if (c65==2)
+     {
+      cout<<endl<<"I don't think I need to kill him now. He wouldn't dare to ever ";
+      cout<<"mess with me"<<endl<<"again."<<endl<<endl;
+      ++(++k);
+      hero.morality+=5;
+      getch();
+      cout<<"Phew! I think that's enough workout for a week! I should go to ";
+      cout<<"the village to   inform them about this incident, and maybe even ";
+      cout<<"get something in return!"<<endl;
+      getch();
+      goto V;
+     }
+     else
+     {
+      cout<<endl<<"I can not waste any time!"<<endl;
+      goto C65;
+     }
+    }
+    else
+    {
+     cout<<endl<<"I try to recall whatever I learned from watching Bruce Lee movies";
+     cout<<" and playing   Mortal Kombat, but by then I get charged by all of them at";
+     cout<<" once, and they shoot,stab, and bludgeon me until I lay there, lifeless.";
+     cout<<" I guess movies and real life are different after all.";
+     getch();
+     cout<<endl<<endl<<endl<<"                                    YOU PERISHED";
+     title();
+     getch();
+     goto R;
+    }
+   }
+   else if (c64==2)
+   {
+    if (hero.charisma>=5)
+    {
+     cout<<endl<<"\"Alright fellas, you don't need to hurt me now!\"";
+     getch();
+     cout<<endl<<"\"And why SHOULDN'T we do so, "<<s6<<"?\"";
+     getch();
+     cout<<endl<<"\"I saw you planning to loot the nearby village, and if you tell";
+     cout<<" me why, maybe we can agree on a tradeoff.\"";
+     getch();
+     cout<<endl<<"\"We just need resources to keep ourselves warm during this harsh";
+     cout<<" winter, that's  all! Whaddaya got?\"";
+     getch();
+     if (comp==1)
+     {
+      cout<<endl<<"\"Well, I've got some fine bone marrow here! Would you fellas be interested";
+      cout<<" in some of it?\"";
+      getch();
+      cout<<endl<<"\"SOME OF IT?! WE'RE GONNA TAKE ALL OF IT!\"";
+      getch();
+      cout<<endl<<"\"If you want all of it, then you have to guarantee the safety of";
+      cout<<" the village.\"";
+      getch();
+      cout<<endl<<"\"Alright sure, whatever.\"";
+      getch();
+      cout<<endl<<"\"You fellas drive a hard bargain, but I guess we've come to a ";
+      cout<<"civilized deal!"<<endl<<" Here's the bone marrow. Good day to you fellas!\""<<endl;
+      --comp;
+      getch();
+      cout<<endl<<"This will definitely hamper my progress, but I guess I had to do";
+      cout<<" what I had to  do."<<endl;
+      hero.morality+=5;
+      getch();
+      goto V;
+     }
+     else if (comp==0)
+     {
+      cout<<endl<<"\"I don't really have anything valuable!\"";
+      getch();
+      cout<<endl<<"\"Then I guess you'll have to pay with your blood!\"";
+      getch();
+      cout<<endl<<endl<<endl<<"                                YOU PERISHED";
+      title();
+      getch();
+      goto R;
+     }
+    }
+    else
+    {
+     cout<<endl<<"As soon as I step out to try to talk to them, my heart starts ";
+     cout<<"pounding harder   than it ever has. I am not able to control my ";
+     cout<<" heart beats, and I flop dead in  front of them, killed by a ";
+     cout<<"cardiac arrest.";
+     getch();
+     cout<<endl<<endl<<endl<<"                                   YOU PERISHED";
+     title();
+     getch();
+     goto R;
+    }
+   }
+   else
+   {
+    cout<<"I don't have any time to waste right now!"<<endl;
+    goto C64;
+   }
+  }
+  else if (c63==2)
+  {
+   cout<<endl<<"I sneak around the house to enter through the back door. I hear ";
+   cout<<"faint murmuringsof a plan to purge the nearby village tomorrow!"<<endl;
+   getch();
+   C66:
+   cout<<endl<<"What should I do?"<<endl;
+   cout<<"1. Run away"<<endl;
+   cout<<"2. Inform the village"<<endl;
+   cout<<"3. Try to convince them"<<endl;
+   cout<<"4. Join them"<<endl;
+   cin>>c66;
+   if (c66==1)
+   {
+    cout<<endl<<"I am not able to comprehend how people could embody literal evil. I";
+    cout<<" am truly    disgusted. I decide to flee from the scene immediately."<<endl;
+    getch();
+    if (hero.agility>=10)
+    {
+     cout<<endl<<"I maneuver around the group successfully to escape from certain ";
+     cout<<"demise. I feel  like a coward, but I realize that I need to prioritize";
+     cout<<" my safety over that"<<endl<<"of the villagers."<<endl;
+     getch();
+     hero.morality-=5;
+     goto V;
+    }
+    else
+    {
+     cout<<endl<<"I try to maneuver around the group, but my body isn't able to ";
+     cout<<"cope with my "<<endl<<"thoughts. As soon as I get spotted by the group, ";
+     cout<<"they pick up their rifles and  gun me down immediately. As the ";
+     cout<<"bullets obliterate my body, I realize that I "<<endl<<"should have done ";
+     cout<<"something else to save myself, and probably even the villagers.";
+     getch();
+     cout<<endl<<endl<<endl<<"                                   YOU PERISHED";
+     title();
+     getch();
+     goto R;
+    }
+   }
+   else if (c66==2)
+   {
+    cout<<endl<<"I feel that as a living creature, it is my duty and moral responsibility";
+    cout<<" to savethe villagers from their impending doom. I have to do this."<<endl;
+    getch();
+    hero.morality+=5;
+    goto V;
+   }
+   else if (c66==3)
+   {
+    cout<<endl<<"I decide that I should be diplomatic about this and reach out to ";
+    cout<<"their "<<endl<<"empathetic side."<<endl;
+    getch();
+    if (hero.charisma>=10)
+    {
+     cout<<endl<<"I am able to convince them with my immeasurable charm. They should";
+     cout<<" not be a "<<endl<<"threat to the villagers, at least for now."<<endl;
+     getch();
+     hero.morality+=10;
+     goto V;
+    }
+    else
+    {
+     cout<<endl<<"Why did I think that this plan would ever work! As soon as I step";
+     cout<<" out to try to talk to them, my heart starts pounding harder than";
+     cout<<" it ever has. As soon as they see me, I am not able to control my";
+     cout<<" heart beats, and I flop dead in front of "<<endl<<"them, killed ";
+     cout<<"by a cardiac arrest.";
+     getch();
+     cout<<endl<<endl<<endl<<"                                   YOU PERISHED";
+     title();
+     getch();
+     goto R;
+    }
+   }
+   else if (c66==4)
+   {
+    cout<<endl<<"I rationalize that I won't be able to take on them alone, and I";
+    cout<<" definitely won'tbe able to convince them to not attack the village,";
+    cout<<" so I guess if you can't beat'em, join 'em! *grins*"<<endl;
+    getch();
+    hero.morality-=10;
+    ++j;
+    goto V;
+   }
+  }
+  else
+  {
+   cout<<endl<<"I need to come up with a plan!"<<endl;
+   goto C63;
+  }
+ }
+ else
+ {
+  cout<<endl<<"I need to decide now!";
+  goto C3;
+ }
+ V:
+ if (j==1)
+ {
+  cout<<endl<<"As soon as my proposal is accepted, my initiation into their cult";
+  cout<<" begins. The   leader takes his hand, makes a cut, and blesses me with";
+  cout<<" his divine blood. He    explains that his cult worships Cthulhu, an ";
+  cout<<"omnipotent being that only contacts him to convey his biddings. He ";
+  cout<<"tells me that the neighbouring village is filled with non-believers";
+  cout<<" and sinners, and that they must be lynched immediately. I    understand";
+  cout<<" his perspective and am ready to be the slave of the one and only"<<endl<<"Cthulhu.";
+  getch();
+  clrscr();
+  cout<<endl<<"The Zumi tribe. It appears beautiful and joyous from the outside,";
+  cout<<" but only we   are enlightened with the knowledge of their sinful nature.";
+  cout<<" We headed towards    them at dawn, when they least suspected it, and ";
+  cout<<"ambushed them from all sides.   They are unworthy of the gift of life,";
+  cout<<" and we have to take it from them."<<endl<<endl;
+  getch();
+  cout<<"It was a bloody massacre. Women, children, old people - no one was ";
+  cout<<"spared. The  heretics had to be burned alive. And so they did. The air";
+  cout<<" was saturated with thesmell of kerosene and burning hair. After 5";
+  cout<<" hours, when the fire eventually     extinguished, I went in to see what";
+  cout<<" I could salvage from the debris. I found    enough metal scraps and melted ";
+  cout<<"adhesive to repair my escape pod and finally     return home.";
+  ++(++comp);
+  getch();
+  goto E;
+ }
+ else if (j==0)
+ {
+  cout<<endl<<"I reach the village to be greeted warmly by the Zumi tribe. Their";
+  cout<<" joyous nature enlivens my own. While they start preparing for a festival";
+  cout<<" to welcome \"the"<<endl<<"foreigner\", I interrupt them to inform them about";
+  cout<<" the cultists' plan to attack  them tomorrow. Their face shows shock,";
+  cout<<" with tinges of complacency and grief.    Apparently, all their neighbouring";
+  cout<<" tribes were slaughtered by the same cultists,and since they too had";
+  cout<<" no way to defend themselves, they were murdered in cold  blood. I try";
+  cout<<" to console them, but they just retreat into their huts, cursing    their";
+  cout<<" luck. I guess they, and I, will have to sleep on it.";
+  getch();
+  clrscr();
+  cout<<endl<<"It's dawn on Eureka, and the orange light enters my hut to gently";
+  cout<<" wake me up    from my slumber, but this time, it wasn't a pleasant surprise;";
+  cout<<" it was the stark realisation that the cultists were going to attack";
+  cout<<" soon. It dawned on me that I had to inspire them to stand up and ";
+  cout<<"fight for their right to live, to truly win against the cultists. ";
+  cout<<"I had to give them a rousing speech. I have to lean on my strengths";
+  cout<<" here in order to get them on my side."<<endl;
+  getch();
+  C7:
+  cout<<endl<<"What kind of speech should I give?"<<endl;
+  cout<<"1. Logical"<<endl;
+  cout<<"2. Emotional"<<endl;
+  cin>>c7;
+  if (c7==1)
+  {
+   if (p==2 || p==3)
+   {
+    cout<<endl<<"\"Let's face the facts - there's 15 of us, and about 50 of them.";
+    cout<<" They also"<<endl<<"probably have a plethora of weapons, whereas what we have";
+    cout<<" is equivalent to"<<endl<<"sticks and stones. But I'm sure that if each and ";
+    cout<<"every one of us plays their    part perfectly and we work as a team, we ";
+    cout<<"will prevail over those bird-brained   fools.\""<<endl<<endl;
+    getch();
+    cout<<"Surprisingly, that worked! Although that may have been so partly because";
+    cout<<" of my  weak insults, I mustn't dwell on it any longer. After all, ";
+    cout<<"we have a battle to  win!"<<endl<<endl;
+    getch();
+    if (k==2)
+    {
+     cout<<"Although I should have expected it, it took me by surprise when ";
+     cout<<"I saw that the  leader that I spared is now leading the cultist ";
+     cout<<"horde. I guess I have to finish this once and for all."<<endl<<endl;
+     getch();
+    }
+    else if (k==1)
+    {
+     cout<<"I was astonished to see that the leader that I myself had shot ";
+     cout<<"point blank had  apparently come back from the dead!"<<endl<<endl;
+     getch();
+     cout<<"\"YOU! HOW DID YOU EVEN SURVIVE!\""<<endl<<endl;
+     getch();
+     cout<<"\"Well I'm sorry to disappoint you, but I guess you should've gone";
+     cout<<" for the head. I've lost enough men because of you. This ends now.\""<<endl<<endl;
+     getch();
+    }
+    cout<<"The battle went on for about 2 hours. It was tough on everyone, especially ";
+    cout<<"the  children, but even they courageously took down a couple of ";
+    cout<<"cultists. On the     frontlines, the brave men and women never gave up, ";
+    cout<<"with each of them tackling atleast 3 cultists. Although, we lost some ";
+    cout<<"on the way, the victory is ours to     claim. I spent a day with them ";
+    cout<<"to commemorate their losses, but left with the   missing components for ";
+    cout<<"my escape pod - a reminder of my relatively good time on their planet."<<endl;
+    ++(++comp);
+    getch();
+    goto E;
+   }
+   else if (p==1 || p==4)
+   {
+    cout<<endl<<"I step onto the platform confidently, but as soon as I see their miserable faces";
+    cout<<"not a single thought comes to my head. Soon, the people realize ";
+    cout<<"that I'm not    their saviour, and so they trade me in exchange for safety with ";
+    cout<<"the cultists,   who proceed to behead me as offering for their god,";
+    cout<<" Cthulhu.";
+    getch();
+    cout<<endl<<endl<<endl<<"                                   YOU PERISHED";
+    title();
+    getch();
+    goto R;
+   }
+  }
+  else if (c7==2)
+  {
+   if (p==1 || p==4)
+   {
+    cout<<endl<<"\"I know that all of you are angry, scared and confused right";
+    cout<<" now. But I'm here  to tell you that if you join me in this fight,";
+    cout<<" I promise you that I will give   you the freedom and independence that";
+    cout<<" you all long for and deserve!\""<<endl<<endl;
+    getch();
+    cout<<"Surprisingly, that worked! Although that may have been so partly because";
+    cout<<" of my  pandering, I mustn't dwell on it any longer. After all, ";
+    cout<<"we have a battle to win!"<<endl;
+    getch();
+    if (k==0)
+    {
+     cout<<"Although I should have expected it, it took me by surprise when ";
+     cout<<"I saw that the  leader that I spared is now leading the cultist ";
+     cout<<"horde. I guess I have to finish this once and for all."<<endl<<endl;
+     getch();
+    }
+    else if (k==1)
+    {
+     cout<<"I was astonished to see that the leader that I myself had shot ";
+     cout<<"point blank had  apparently come back from the dead!"<<endl<<endl;
+     getch();
+     cout<<"\"YOU! HOW DID YOU EVEN SURVIVE!\""<<endl<<endl;
+     getch();
+     cout<<"\"Well I'm sorry to disappoint you, but I guess you should've gone";
+     cout<<" for the head. I've lost enough men because of you. This ends now.\""<<endl<<endl;
+     getch();
+    }
+    cout<<"The battle went on for about 2 hours. It was tough on everyone, especially ";
+    cout<<"the  children, but even they courageously took down a couple of ";
+    cout<<"cultists. On the     frontlines, the brave men and women never gave up, ";
+    cout<<"with each of them tackling atleast 3 cultists. Although, we lost some ";
+    cout<<"on the way, the victory is ours to     claim. I spent a day with them ";
+    cout<<"to commemorate their losses, but left with the   missing components for ";
+    cout<<"my escape pod - a reminder of my relatively good time on their planet."<<endl;
+    ++(++comp);
+    getch();
+    goto E;
+   }
+   else if (p==2 || p==3)
+   {
+    cout<<endl<<"I step onto the platform confidently, but as soon as I see their miserable faces";
+    cout<<"not a single thought comes to my head. Soon, the people realize ";
+    cout<<"that I'm not    their saviour, and so they trade me in exchange for safety with ";
+    cout<<"the cultists,   who proceed to behead me as offering for their god,";
+    cout<<" Cthulhu.";
+    getch();
+    cout<<endl<<endl<<endl<<"                                   YOU PERISHED";
+    title();
+    getch();
+    goto R;
+   }
+  }
+  else
+  {
+   cout<<"I don't have time to waste; I need to decide NOW!"<<endl;
+   goto C7;
+  }
+ }
+ E:
+ clrscr();
+ cout<<endl;
+ if (hero.morality>0 && comp==2)
+ {
+  cout<<"I return to my escape pod dejected, knowing that I was SO close to ";
+  cout<<"achieving my goal, when I see that I had overlooked a spare fuel can during";
+  cout<<" my first search! I know, it seems like a convenient plot device to me too!";
+  cout<<" Well, at least now I  have all 3 components to go back home! Finally,";
+  cout<<" I can return to normalcy!"<<endl<<"Goodbye, Eureka!";
+  getch();
+  cout<<endl<<endl<<endl<<"                                       THE END";
+  title();
+  getch();
+  goto R;
+ }
+ else if (hero.morality>0 && comp==3)
+ {
+  cout<<"I have all the components to repair my escape pod now! Although I wish";
+  cout<<" I could  share this joy with "<<(hero.SO)<<", I guess I have to live";
+  cout<<" with it somehow."<<endl<<"Anyways, Goodbye Eureka!";
+  getch();
+  title();
+  getch();
+  cout<<endl<<endl<<".";
+  getch();
+  cout<<".";
+  getch();
+  cout<<".";
+  getch();
+  whns();
+  cout<<endl<<endl<<"\"This *huffs* is *huffs* Officer "<<(hero.SO)<<endl;
+  getch();
+  whns();
+  cout<<"calling from Solaris, currently *huffs* located in Sector 4587 of the";
+  cout<<" Andromeda Galaxy. We are *huffs* badly damaged and require immediate";
+  cout<<" assistance."<<endl<<endl;
+  getch();
+  whns();
+  cout<<"\"Does anyone copy?\""<<endl<<endl<<endl;
+  getch();
+  cout<<"                                       THE END";
+  getch();
+  cout<<".";
+  getch();
+  cout<<".";
+  getch();
+  cout<<".";
+  getch();
+  cout<<"?";
+  getch();
+  goto R;
+ }
+ else if (hero.morality==0 && comp==2)
+ {
+  cout<<"I try with all my efforts to repair my pod with the little resources";
+  cout<<" that I havebut I'm unsuccessful. With nothing left, I return to ";
+  cout<<"the village."<<endl<<endl;
+  cout<<"Thankfully, they are as welcoming as ever, and I quickly integrate ";
+  cout<<"myself into  their society, and learn all their customs and traditions.";
+  cout<<" Although I miss my   old life, I guess this is my new normal now.";
+  getch();
+  cout<<endl<<endl<<endl<<"                                      THE END";
+  title();
+  getch();
+  goto R;
+ }
+ else if (hero.morality==0 && comp==3)
+ {
+  cout<<"I have all the components I need to repair my escape pod. Still, even";
+  cout<<" as I get  launched into the cosmos, I feel strangely empty; as if I ";
+  cout<<"have missed out on a  lot..."<<endl<<endl<<endl;
+  getch();
+  cout<<"                                       THE END";
+  title();
+  getch();
+  goto R;
+ }
+ else if (hero.morality<0 && comp==2)
+ {
+  cout<<"As I concentrate on repairing my escape pod, I don't notice a black,";
+  cout<<" three-     hooded snake slither towards me. It spreads its hood and";
+  cout<<" leans back before"<<endl<<"spitting acid at me. My screams deafen the sounds";
+  cout<<" of the acid scalding my skin. As I lay there on the ground, gazing ";
+  cout<<"at the midnight sky, while my internals    corrode, I realize that karma";
+  cout<<" is a worse mistress.";
+  getch();
+  cout<<endl<<endl<<endl<<"                                      THE END";
+  title();
+  getch();
+  goto R;
+ }
+ else if (hero.morality<0 && comp==3)
+ {
+  cout<<"YES! Now that the pod is fully operational, I can finally escape this";
+  cout<<" hellhole! Goodbye, Eureka! See you never!"<<endl<<endl;
+  getch();
+  cout<<".";
+  getch();
+  cout<<".";
+  getch();
+  cout<<".";
+  getch();
+  cout<<"What's happening!"<<endl<<endl;
+  getch();
+  alarm();
+  cout<<"*SYSTEMS CRASHING! ENGINE FAILURE IMMINENT!*"<<endl<<endl;
+  getch();
+  cout<<"oh no."<<endl<<endl<<endl;
+  getch();
+  cout<<"                                      THE END";
+  title();
+  getch();
+  goto R;
+ }
+ R:
+ clrscr();
+ save();
+ display();
+ Z:
+ cout<<"\n\nDo you want to compare your performance? (Y/N): ";
+ cin>>ch;
+ if (ch=='y' || ch=='Y')
+  displayall();
+ else if (ch=='n' || ch=='N')
+  goto X;
+ else
+  goto Z;
+ X:
+ cout<<endl<<endl<<"PLAY AGAIN? (Y/N): ";
+ cin>>r;
+ if (r=='Y' || r=='y')
+  goto T;
+ else if (r=='N' || r=='n')
+  exit(0);
+ else
+  goto X;
+}
